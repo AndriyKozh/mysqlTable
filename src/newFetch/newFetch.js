@@ -1,6 +1,5 @@
-const { db } = require("../model/dbConnection");
-
 const arrHistory = require("../array/arrHistory");
+const { db } = require("../model/dbConnection");
 
 function historyId(arrViewes) {
   for (let i = 0; i < arrViewes.length; i++) {
@@ -9,8 +8,8 @@ function historyId(arrViewes) {
     const titleUrl = resInd.titleUrl;
     const videoID = titleUrl.slice(32, 47);
 
-    function lengthVideo(infoLength) {
-      const lengOne = infoLength?.contentDetails.duration;
+    function videoInfo(info) {
+      const lengOne = info?.contentDetails.duration;
       console.log(lengOne);
       const durationString = lengOne;
 
@@ -30,28 +29,35 @@ function historyId(arrViewes) {
         }
       }
 
-      const sqlQuery =
-        "UPDATE user_history_youtube SET   lengthVideo=?  WHERE  user_history_youtube_id=?";
-      db.query(sqlQuery, [durationInSeconds, videoID], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(result);
-        }
-      });
-    }
+      console.log(durationInSeconds);
+      const vieweVideo = info?.statistics.viewCount;
+      const likeVideo = info?.statistics.likeCount;
 
+      // console.log(`${videoID} ${vieweVideo}`);
+      const sqlQuery =
+        "UPDATE user_history_youtube SET   viewe=?, oklike=?, lengthVideo=?  WHERE  user_history_youtube_id=?";
+      db.query(
+        sqlQuery,
+        [vieweVideo || "0", likeVideo || "0", durationInSeconds || 0, videoID],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(result);
+          }
+        }
+      );
+    }
     fetch(
-      `https://www.googleapis.com/youtube/v3/videos?id=${videoID}&part=contentDetails&key=`
+      `https://www.googleapis.com/youtube/v3/videos?id=${videoID}&part=statistics&part=contentDetails&key=`
     )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        lengthVideo(...data.items);
+        videoInfo(...data.items);
       });
   }
-  return;
 }
 
 historyId(arrHistory);

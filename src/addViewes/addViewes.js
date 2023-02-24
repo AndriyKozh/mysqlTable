@@ -31,7 +31,7 @@ function historyId(arrViewes) {
     }
 
     fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoID}&key=AIzaSyDs6h228Zj__2j37GWw1Lwx8YgCUFr6M2o`
+      `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoID}&key=`
     )
       .then((response) => {
         return response.json();
