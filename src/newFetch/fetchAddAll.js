@@ -1,22 +1,21 @@
-const { config } = require("dotenv");
 const arrHistory = require("../array/arrHistory");
+const arrViewes = require("../array/arrViewes");
 const { db } = require("../model/dbConnection");
 require("dotenv").config();
 const { KEY, KEY2 } = process.env;
+const URL = "https://www.googleapis.com/youtube/v3/videos";
 
 function historyId(arrViewes) {
   for (let i = 0; i < arrViewes.length; i++) {
     const resInd = arrViewes[i];
-
     const titleUrl = resInd.titleUrl;
-
     const videoID = titleUrl?.slice(32, 47);
 
-    const aaa = function videoInfo(info) {
+    function videoInfo(info) {
       const lengOne = info?.contentDetails.duration;
       console.log(lengOne);
-      const durationString = lengOne;
 
+      const durationString = lengOne;
       const regex = /(\d+)D|(\d+)H|(\d+)M|(\d+)S/g;
       let match;
       let durationInSeconds = 0;
@@ -52,13 +51,9 @@ function historyId(arrViewes) {
           }
         }
       );
-    };
+    }
 
-    fetch(
-      `https://www.googleapis.com/youtube/v3/videos?id=${videoID}&part=statistics&part=contentDetails&key=${
-        KEY || KEY2
-      }`
-    )
+    fetch(`${URL}?id=${videoID}&part=statistics&part=contentDetails&key=${KEY}`)
       .then((response) => {
         return response.json();
       })

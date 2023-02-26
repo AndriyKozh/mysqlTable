@@ -10,15 +10,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // read all
 app.get("/api/readData", (req, res) => {
-  const sqlQuery = "SELECT * FROM testing";
+  const sqlQuery = "SELECT lengthVideo FROM user_history_youtube ";
+
+
+
+// .filter(item => item.lengthVideo !== null).sort((a,b)=> a.lengthVideo - b.lengthVideo));
+//       console.log(result.filter(item => item.lengthVideo !== null)
 
   db.query(sqlQuery, (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      res.send(result);
-      console.log(result);
+     res.send(result);
+
     }
+   
+
   });
 });
 
