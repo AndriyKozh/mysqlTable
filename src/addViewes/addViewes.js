@@ -5,16 +5,16 @@ function historyId(arrViewes) {
   for (let i = 0; i < arrViewes.length; i++) {
     const resInd = arrViewes[i];
 
+    // videoId
     const titleUrl = resInd.titleUrl;
     const videoID = titleUrl.slice(32, 47);
 
+    // likeVideo
     function videoInfo(info) {
       const vieweVideo = info?.statistics.viewCount;
-      console.log(vieweVideo);
       const likeVideo = info?.statistics.likeCount;
 
-      // console.log(`${videoID} ${vieweVideo}`);
-
+      // add DB
       const sqlQuery =
         "UPDATE user_history_youtube SET   viewe=?, oklike=?  WHERE  user_history_youtube_id=?";
       db.query(

@@ -8,28 +8,20 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// read all
+// read all "GET"
 app.get("/api/readData", (req, res) => {
   const sqlQuery = "SELECT lengthVideo FROM user_history_youtube ";
-
-
-
-// .filter(item => item.lengthVideo !== null).sort((a,b)=> a.lengthVideo - b.lengthVideo));
-//       console.log(result.filter(item => item.lengthVideo !== null)
 
   db.query(sqlQuery, (err, result) => {
     if (err) {
       console.log(err);
     } else {
-     res.send(result);
-
+      res.send(result);
     }
-   
-
   });
 });
 
-// read video ID
+// read video ID "GET"
 
 app.get("/api/readVideo/:user_history_youtube_id", (req, res) => {
   const videoLink = req.params.watch_history_id;
@@ -94,6 +86,8 @@ app.put("/api/updateHistory", (req, res) => {
     }
   });
 });
+
+// DELETE
 
 app.delete("/api/deleteHistory", (req, res) => {
   const historyId = req.body.watch_history_id;
