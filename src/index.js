@@ -16,7 +16,19 @@ app.get("/api/readData", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.send(result);
+      const arr = [];
+      const a = result
+        .filter((item) => item.lengthVideo !== 0)
+        .sort((a, b) => a.lengthVideo - b.lengthVideo);
+      const b = (a) => {
+        for (let i = 0; i < a.length; i++) {
+          const a = a[i];
+          const b = a.videoLink;
+          arr.push(b);
+        }
+      };
+      b(a);
+      res.send(arr);
     }
   });
 });
@@ -104,6 +116,6 @@ app.delete("/api/deleteHistory", (req, res) => {
   });
 });
 
-app.listen(3001, () => {
-  console.log("server berhasil berjalan pada port 3001!");
+app.listen(3000, () => {
+  console.log("server berhasil berjalan pada port 3000!");
 });
