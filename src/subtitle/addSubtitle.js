@@ -3,21 +3,18 @@ const youtubedl = require("youtube-dl-exec");
 const arrTest = require("./arrHistory/arrTest");
 const path = require("path");
 const fs = require("fs");
-const { abbreviationText } = require("./abbreviation");
-const { textInJson } = require("./textInJson");
-const { countWord } = require("./countWord");
-
-// const result = require("../natural");
+const { db } = require("../model/dbConnection");
 
 const addSubtitle = (arrTest) => {
   for (let i = 0; i < arrTest.length; i++) {
+    // download the file with subtitles in vtt format
+
     const arrRes = arrTest[i];
     const arrId = arrRes.titleUrl.slice(32, 47);
     console.log(arrId);
     const videoUrl = `https://www.youtube.com/watch?v=${arrId}`;
     const folderName = "./src/subtitle/subtitleVTT";
-    // const fileName = `${arrId}`;
-    // const filePath = path.join(__dirname, folderName, fileName);
+
     const options = {
       writeSub: true,
       writeAutoSub: true,
@@ -38,6 +35,17 @@ const addSubtitle = (arrTest) => {
       .catch((err) => {
         console.error("Error:", err);
       });
+    // video subtitles processed
+    const sqlQuery =
+      "UPDATE user_history_youtube SET subtitleAdd=? WHERE user_history_youtube_id=?";
+    db.query(sqlQuery, ["true", arrId], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+      }
+    });
   }
 };
+
 module.exports = { addSubtitle };

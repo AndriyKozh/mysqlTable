@@ -3,6 +3,7 @@ const mysql2 = require("mysql2");
 require("dotenv").config();
 
 const arrHistory = require("../array/arrHistory");
+
 const { HOST, USER, DATABASE, PASSWORD } = process.env;
 
 const conection = mysql2.createConnection({
@@ -22,13 +23,13 @@ conection.connect(function (err) {
   }
 });
 
-conection.execute(
-  "SELECT * FROM user_history_youtube",
-  function (err, results) {
-    console.log(err);
-    console.log(results);
-  }
-);
+// conection.execute(
+//   "SELECT * FROM user_history_youtube",
+//   function (err, results) {
+//     console.log(err);
+//     console.log(results);
+//   }
+// );
 
 // ================ ADD LINE INFO_HISTORY ==================
 
@@ -39,7 +40,7 @@ function resultArr(arrHistory) {
     const arrIndx = arrHistory[i];
 
     const titleUrl = arrIndx.titleUrl;
-    console.log(titleUrl);
+    // console.log(titleUrl);
 
     const time = arrIndx.time.split("");
     const timeOne = time.splice(10, 1, " ");
@@ -60,16 +61,16 @@ function resultArr(arrHistory) {
     const a = history[i];
     console.log(a);
 
-    const sql =
-      "INSERT INTO user_history_youtube (user_history_youtube_id, title, titleUrl, timeDate, list) VALUE (?,?,?,?,?)"; // watch_history - table
+    // const sql =
+    //   "INSERT INTO user_history_youtube (user_history_youtube_id, title, titleUrl, timeDate, list) VALUE (?,?,?,?,?)"; // watch_history - table
 
-    conection.execute(sql, a, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("УСПІШНО ДОБАВЛЕНО");
-      }
-    });
+    // conection.execute(sql, a, function (err) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log("УСПІШНО ДОБАВЛЕНО");
+    //   }
+    // });
   }
 }
 
