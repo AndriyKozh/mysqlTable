@@ -2,6 +2,15 @@ const mysql2 = require("mysql2");
 const arrayWords = require("../json_subtitle/allResult/test.json");
 require("dotenv").config();
 
+const { HOST, USER, DATABASE, PASSWORD } = process.env;
+
+const conection = mysql2.createConnection({
+  host: HOST,
+  user: "root",
+  database: DATABASE,
+  password: PASSWORD,
+});
+
 function allWord(resApp) {
   let spreadObj = {};
   for (let i = 0; i < resApp.length; i++) {
@@ -18,15 +27,6 @@ const result = Object.entries(addDB[0]).map(([key, value]) => [key, value]);
 // console.log(addDB);
 
 // const arrHistory = require("../array/arrHistory");
-
-const { HOST, USER, DATABASE, PASSWORD } = process.env;
-
-const conection = mysql2.createConnection({
-  host: HOST,
-  user: "root",
-  database: DATABASE,
-  password: PASSWORD,
-});
 
 //===================== table connection ============  watch_history - table =========
 

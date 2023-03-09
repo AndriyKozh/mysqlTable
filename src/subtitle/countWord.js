@@ -62,7 +62,7 @@ function countWord(arrHistory) {
 }
 // countWord(arrHistory);
 
-module.exports = { countWord };
+module.exports = countWord;
 // const fs = require("fs");
 
 // const folderName = "exampleFolder";
