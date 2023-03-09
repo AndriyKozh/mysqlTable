@@ -37,4 +37,4 @@ function textInJson(arrHistory) {
 }
 // textInJson(arrHistory);
 
-module.exports = { textInJson };
+module.exports = textInJson;

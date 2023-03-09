@@ -48,4 +48,4 @@ const addSubtitle = (arrTest) => {
   }
 };
 
-module.exports = { addSubtitle };
+module.exports = addSubtitle;

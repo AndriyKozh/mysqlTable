@@ -11,7 +11,7 @@ function abbreviationText(arrHistory) {
 
     const arr = require(`./json_subtitle/${arrId}/${arrId}.json`);
     const resKey = arr.join(" ");
-    console.log("Wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+    console.log("ok");
 
     //filters only words from subtitles
 
@@ -40,7 +40,7 @@ function abbreviationText(arrHistory) {
 
 // abbreviationText(arrHistory);
 
-module.exports = { abbreviationText };
+module.exports = abbreviationText;
 //////////////////////////////////////////////////////////////////////
 
 //витягує всі кириличні символи
