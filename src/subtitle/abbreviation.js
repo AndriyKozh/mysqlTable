@@ -3,15 +3,10 @@ const natural = require("natural");
 const fs = require("fs");
 const arrHistory = require("./arrHistory/arrTest");
 
-function abbreviationText(arrHistory) {
-  for (let i = 0; i < arrHistory.length; i++) {
-    const arrRes = arrHistory[i];
-    const arrId = arrRes.titleUrl.slice(32, 47);
-    console.log(arrId);
-
-    const arr = require(`./json_subtitle/${arrId}/${arrId}.json`);
+const abbreviationText = (arrHistory) => {
+  return new Promise((resolve, reject) => {
+    const arr = require(`./json_subtitle/${arrHistory}/${arrHistory}.json`);
     const resKey = arr.join(" ");
-    console.log("ok");
 
     //filters only words from subtitles
 
@@ -28,19 +23,23 @@ function abbreviationText(arrHistory) {
     console.log(stems); // Output: ['AeBo4K', ' ABO4K', 'ABO4K', AeBO4K
 
     fs.writeFile(
-      `./src/subtitle/json_subtitle/${arrId}/next_${arrId}.json`,
+      `./src/subtitle/json_subtitle/${arrHistory}/next_${arrHistory}.json`,
       JSON.stringify(stems),
       (err) => {
-        if (err) throw err;
-        console.log("The file has been saved!");
+        if (err) {
+          console.error("Error:", err);
+          reject(err);
+        } else {
+          console.log("The file has been saved!");
+          resolve();
+        }
       }
     );
-  }
-}
-
-// abbreviationText(arrHistory);
+  });
+};
 
 module.exports = abbreviationText;
+
 //////////////////////////////////////////////////////////////////////
 
 //витягує всі кириличні символи
