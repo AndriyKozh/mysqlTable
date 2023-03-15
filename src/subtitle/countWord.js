@@ -1,19 +1,13 @@
 const natural = require("natural");
 const fs = require("fs");
 const tokenizer = new natural.WordTokenizer();
-const arrHistory = require("./arrHistory/arrTest");
 
 function countWord(arrHistory) {
-  for (let i = 0; i < arrHistory.length; i++) {
-    const arrRes = arrHistory[i];
-    const arrId = arrRes.titleUrl.slice(32, 47);
-
-    const resultSubtitle = require(`./json_subtitle/${arrId}/next_${arrId}.json`);
-    // console.log(resultSubtitle);
-
+  return new Promise((resolve, reject) => {
+    const resultSubtitle = require(`./json_subtitle/${arrHistory}/next_${arrHistory}.json`);
     const stemmer = natural.PorterStemmer;
-    const folderPath = `./src/subtitle/json_subtitle/${arrId}`;
-    const fileName = `count_${arrId}.json`;
+    const folderPath = `./src/subtitle/json_subtitle/${arrHistory}`;
+    const fileName = `count_${arrHistory}.json`;
     const folderPathAll = `./src/subtitle/json_subtitle/allResult`;
     const fileNameAll = "allResult.json";
 
@@ -25,44 +19,49 @@ function countWord(arrHistory) {
     // Generate stems for each word
     const stems = tokens.map((token) => stemmer.stem(token));
 
-    // Count unique stems and their frequency of occurrence
-    const stemCounts = stems.reduce((counts, stem) => {
-      if (counts[stem]) {
-        counts[stem]++;
-      } else {
-        counts[stem] = 1;
-      }
-      return counts;
-    }, {});
-
-    // console.log(stemCounts);
-
     const stemFrequencies = stems.reduce((freqs, stem) => {
       freqs[stem] = (freqs[stem] || 0) + 1;
       return freqs;
     }, {});
 
+    const dividedFrequencies = {};
+
+    Object.entries(stemFrequencies).map(([key, value]) => {
+      dividedFrequencies[key] = Math.ceil(value / 3);
+    });
+
+    console.log(dividedFrequencies);
+
     fs.writeFile(
       `${folderPath}/${fileName}`,
-      JSON.stringify(stemFrequencies),
+      JSON.stringify(dividedFrequencies),
       (err) => {
-        if (err) throw err;
-        console.log("The file has been saved!");
+        if (err) {
+          reject(err);
+        } else {
+          console.log("The file has been saved!");
+          resolve();
+        }
       }
     );
+
     fs.appendFile(
       `${folderPathAll}/${fileNameAll}`,
-      `${JSON.stringify(stemFrequencies) + ","}`,
+      `${JSON.stringify(dividedFrequencies) + ","}`,
       (err) => {
-        if (err) throw err;
-        console.log("The file has been saved!");
+        if (err) {
+          reject(err);
+        } else {
+          console.log("The file has been saved!");
+          resolve();
+        }
       }
     );
-  }
+  });
 }
-// countWord(arrHistory);
 
 module.exports = countWord;
+
 // const fs = require("fs");
 
 // const folderName = "exampleFolder";

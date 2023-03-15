@@ -1,4 +1,6 @@
+const { rejects } = require("assert");
 const mysql2 = require("mysql2");
+const { resolve } = require("path");
 const arrayWords = require("../json_subtitle/allResult/test.json");
 require("dotenv").config();
 
@@ -11,19 +13,18 @@ const conection = mysql2.createConnection({
   password: PASSWORD,
 });
 
-function allWord(resApp) {
-  let spreadObj = {};
-  for (let i = 0; i < resApp.length; i++) {
-    spreadObj = { ...spreadObj, ...resApp[i] };
-  }
-  return spreadObj;
-}
+// function allWord(resApp) {
+//   let spreadObj = {};
+//   for (let i = 0; i < resApp.length; i++) {
+//     spreadObj = { ...spreadObj, ...resApp[i] };
+//   }
+//   return spreadObj;
+// }
 
-const addDB = [allWord(arrayWords)];
+// const addDB = [allWord(arrayWords)];
 
-const result = Object.entries(addDB[0]).map(([key, value]) => [key, value]);
+// const result = Object.entries(addDB[0]).map(([key, value]) => [key, value]);
 
-// console.log(result);
 // console.log(addDB);
 
 // const arrHistory = require("../array/arrHistory");
@@ -45,23 +46,33 @@ const result = Object.entries(addDB[0]).map(([key, value]) => [key, value]);
 
 // ================ ADD LINE INFO_HISTORY ==================
 
-function resultArr(arrHistory) {
-  for (let i = 0; i < arrHistory.length; i++) {
-    const arrIndx = arrHistory[i];
-    console.log(typeof arrIndx[0]);
+function addDB(objWord) {
+  return new Promise((resolve, reject) => {
+    const arrId = require(`../json_subtitle/${objWord}/count_${objWord}.json`);
 
-    const sql = `UPDATE words
-SET num_repetitions = num_repetitions + ${arrIndx[1]}
-WHERE words = '${arrIndx[0]}'`; // watch_history - table
+    const arrOne = Object.entries(arrId);
 
-    conection.execute(sql, arrIndx, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("УСПІШНО ДОБАВЛЕНО");
-      }
-    });
-  }
+    console.log(arrOne);
+
+    for (let i = 0; i < arrOne.length; i++) {
+      const arrIndx = arrOne[i];
+      console.log(typeof arrIndx[0]);
+
+      const sql = `INSERT INTO words (words, num_repetitions)
+  VALUES ('${arrIndx[0]}', ${arrIndx[1]})
+  ON DUPLICATE KEY UPDATE num_repetitions = num_repetitions + ${arrIndx[1]};`;
+
+      conection.execute(sql, arrIndx, function (err) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          console.log("УСПІШНО ДОБАВЛЕНО");
+          resolve();
+        }
+      });
+    }
+  });
 }
 
-resultArr(result);
+module.exports = addDB;
