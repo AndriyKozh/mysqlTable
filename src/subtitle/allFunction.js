@@ -1,17 +1,19 @@
 // const rowID = require("./arrHistory/rowID");
 const { db } = require("../model/dbConnection");
 
-const mysqlQuery =
-  "SELECT user_history_youtube_id FROM user_history_youtube WHERE subtitleAdd = 'falce' ORDER BY viewe ASC LIMIT 0, 1";
+setInterval(() => {
+  const mysqlQuery =
+    "SELECT user_history_youtube_id FROM user_history_youtube WHERE subtitleAdd = 'falce' ORDER BY viewe DESC LIMIT 0, 1";
 
-db.query(mysqlQuery, function (err, results) {
-  if (err) {
-    console.error(err);
-  }
-  const rowID = Object.values(results[0]);
-  console.log(rowID);
-  runFunctions(rowID);
-});
+  db.query(mysqlQuery, function (err, results) {
+    if (err) {
+      console.error(err);
+    }
+    const rowID = Object.values(results[0]);
+    console.log(rowID);
+    runFunctions(rowID);
+  });
+}, 5000);
 
 const {
   abbreviationText,
@@ -23,23 +25,63 @@ const sortWord = require("./sort/sort");
 const addDB = require("./addInDB/addWordDB");
 
 async function runFunctions(rowID) {
-  await addSubtitle(rowID);
-  console.log("Function 1");
+  try {
+    await addSubtitle(rowID);
+    console.log("Function 1");
+  } catch (error) {
+    console.error("Error in addSubtitle:", error);
+    const mysqlQuery = `UPDATE user_history_youtube SET status = 'noVideo' WHERE user_history_youtube_id = "${rowID}"`;
+    db.query(mysqlQuery, (err, result) => {
+      if (err) throw err;
+      console.log("Number of rows affected:", result.affectedRows);
+    });
+  }
 
-  await textInJson(rowID);
-  console.log("Function 2");
+  try {
+    await textInJson(rowID);
+    console.log("Function 2");
+  } catch (error) {
+    console.error("Error in textInJson:", error);
 
-  await abbreviationText(rowID);
-  console.log("Function 3");
+    const mysqlQuery = `UPDATE user_history_youtube SET status = 'noSubtitle' WHERE user_history_youtube_id = "${rowID}"`;
+    db.query(mysqlQuery, (err, result) => {
+      if (err) throw err;
+      console.log("Number of rows affected:", result.affectedRows);
+    });
+  }
 
-  await countWord(rowID);
-  console.log("Function 4");
+  try {
+    await abbreviationText(rowID);
+    console.log("Function 3");
+  } catch (error) {
+    console.error("Error in abbreviationText:", error);
+  }
 
-  await sortWord(rowID);
-  console.log("Function 5");
+  try {
+    await countWord(rowID);
+    console.log("Function 4");
+  } catch (error) {
+    console.error("Error in countWord:", error);
+  }
 
-  await addDB(rowID);
-  console.log("Function 6");
+  try {
+    await sortWord(rowID);
+    console.log("Function 5");
+  } catch (error) {
+    console.error("Error in sortWord:", error);
+  }
+
+  try {
+    await addDB(rowID);
+    console.log("Function 6");
+    const mysqlQuery = `UPDATE user_history_youtube SET status = 'subtitleSaved' WHERE user_history_youtube_id = "${rowID}"`;
+    db.query(mysqlQuery, (err, result) => {
+      if (err) throw err;
+      console.log("Number of rows affected:", result.affectedRows);
+    });
+  } catch (error) {
+    console.error("Error in addDB:", error);
+  }
 }
 
-// runFunctions("_1yar9R7f5w");
+// runFunctions("4pxnGcv5DdU");

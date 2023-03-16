@@ -1,8 +1,5 @@
 const fs = require("fs");
 
-const folderPath = `./src/subtitle/json_subtitle/fCmZ9zj5oSs`;
-const fileName = `result_fCmZ9zj5oSs.json`;
-
 function sortWord(myObj) {
   console.log(myObj);
   const wordObj = require(`../json_subtitle/${myObj}/count_${myObj}.json`);

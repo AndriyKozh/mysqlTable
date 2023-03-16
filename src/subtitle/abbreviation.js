@@ -1,7 +1,7 @@
 const natural = require("natural");
 
 const fs = require("fs");
-const arrHistory = require("./arrHistory/arrTest");
+// const arrHistory = require("./arrHistory/arrTest");
 
 const abbreviationText = (arrHistory) => {
   return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ const abbreviationText = (arrHistory) => {
     const stemmer = natural.PorterStemmerRu;
 
     const stems = words.map((word) => stemmer.stem(word));
-    console.log(stems); // Output: ['AeBo4K', ' ABO4K', 'ABO4K', AeBO4K
+    // console.log(stems); // Output: ['AeBo4K', ' ABO4K', 'ABO4K', AeBO4K
 
     fs.writeFile(
       `./src/subtitle/json_subtitle/${arrHistory}/next_${arrHistory}.json`,

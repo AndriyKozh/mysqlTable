@@ -1,6 +1,6 @@
 const fs = require("fs");
 const natural = require("natural");
-const arrHistory = require("./arrHistory/arrTest");
+// const arrHistory = require("./arrHistory/arrTest");
 
 const textInJson = (arrHistory) => {
   return new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@ const textInJson = (arrHistory) => {
       }
       const vttString = data;
       a.push(vttString);
-      console.log(a);
+      // console.log(a);
 
       // Create the folder
       fs.mkdir(folderName, (err) => {

@@ -1,6 +1,5 @@
-/////////////////////////////////////////////////////////////////
 const youtubedl = require("youtube-dl-exec");
-const arrTest = require("./arrHistory/arrTest");
+// const arrTest = require("./arrHistory/arrTest");
 const path = require("path");
 const fs = require("fs");
 const { db } = require("../model/dbConnection");
@@ -34,7 +33,7 @@ const addSubtitle = (arrTest) => {
             console.log(err);
             reject(err);
           } else {
-            console.log(result);
+            // console.log(result);
             resolve(result);
           }
         });

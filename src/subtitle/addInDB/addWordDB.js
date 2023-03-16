@@ -1,33 +1,12 @@
-const { rejects } = require("assert");
 const mysql2 = require("mysql2");
-const { resolve } = require("path");
-const arrayWords = require("../json_subtitle/allResult/test.json");
 require("dotenv").config();
-
 const { HOST, USER, DATABASE, PASSWORD } = process.env;
-
 const conection = mysql2.createConnection({
   host: HOST,
   user: "root",
   database: DATABASE,
   password: PASSWORD,
 });
-
-// function allWord(resApp) {
-//   let spreadObj = {};
-//   for (let i = 0; i < resApp.length; i++) {
-//     spreadObj = { ...spreadObj, ...resApp[i] };
-//   }
-//   return spreadObj;
-// }
-
-// const addDB = [allWord(arrayWords)];
-
-// const result = Object.entries(addDB[0]).map(([key, value]) => [key, value]);
-
-// console.log(addDB);
-
-// const arrHistory = require("../array/arrHistory");
 
 //===================== table connection ============  watch_history - table =========
 
@@ -56,7 +35,6 @@ function addDB(objWord) {
 
     for (let i = 0; i < arrOne.length; i++) {
       const arrIndx = arrOne[i];
-      console.log(typeof arrIndx[0]);
 
       const sql = `INSERT INTO words (words, num_repetitions)
   VALUES ('${arrIndx[0]}', ${arrIndx[1]})

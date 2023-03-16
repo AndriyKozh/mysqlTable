@@ -61,16 +61,16 @@ function resultArr(arrHistory) {
     const a = history[i];
     console.log(a);
 
-    // const sql =
-    //   "INSERT INTO user_history_youtube (user_history_youtube_id, title, titleUrl, timeDate, list) VALUE (?,?,?,?,?)"; // watch_history - table
+    const sql =
+      "INSERT INTO user_history_youtube (user_history_youtube_id, title, titleUrl, timeDate, list) VALUE (?,?,?,?,?)"; // watch_history - table
 
-    // conection.execute(sql, a, function (err) {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     console.log("УСПІШНО ДОБАВЛЕНО");
-    //   }
-    // });
+    conection.execute(sql, a, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("УСПІШНО ДОБАВЛЕНО");
+      }
+    });
   }
 }
 

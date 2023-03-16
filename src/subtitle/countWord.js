@@ -30,7 +30,7 @@ function countWord(arrHistory) {
       dividedFrequencies[key] = Math.ceil(value / 3);
     });
 
-    console.log(dividedFrequencies);
+    // console.log(dividedFrequencies);
 
     fs.writeFile(
       `${folderPath}/${fileName}`,
@@ -61,21 +61,3 @@ function countWord(arrHistory) {
 }
 
 module.exports = countWord;
-
-// const fs = require("fs");
-
-// const folderName = "exampleFolder";
-// const fileName = "exampleFile.txt";
-// const fileContents = "This is an example file.";
-
-// // Create the folder
-// fs.mkdir(folderName, (err) => {
-//   if (err) throw err;
-//   console.log("Folder created successfully.");
-
-//   // Save the file to the folder
-//   fs.writeFile(`${folderName}/${fileName}`, fileContents, (err) => {
-//     if (err) throw err;
-//     console.log("File saved successfully.");
-//   });
-// });
