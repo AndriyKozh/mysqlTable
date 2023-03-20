@@ -1,4 +1,3 @@
-// const rowID = require("./arrHistory/rowID");
 const { db } = require("../model/dbConnection");
 
 setInterval(() => {
@@ -30,7 +29,7 @@ async function runFunctions(rowID) {
     console.log("Function 1");
   } catch (error) {
     console.error("Error in addSubtitle:", error);
-    const mysqlQuery = `UPDATE user_history_youtube SET status = 'noVideo' WHERE user_history_youtube_id = "${rowID}"`;
+    const mysqlQuery = `UPDATE user_history_youtube SET statusSub = 'noVideo' WHERE user_history_youtube_id = "${rowID}"`;
     db.query(mysqlQuery, (err, result) => {
       if (err) throw err;
       console.log("Number of rows affected:", result.affectedRows);
@@ -43,7 +42,7 @@ async function runFunctions(rowID) {
   } catch (error) {
     console.error("Error in textInJson:", error);
 
-    const mysqlQuery = `UPDATE user_history_youtube SET status = 'noSubtitle' WHERE user_history_youtube_id = "${rowID}"`;
+    const mysqlQuery = `UPDATE user_history_youtube SET statusSub = 'noSubtitle' WHERE user_history_youtube_id = "${rowID}"`;
     db.query(mysqlQuery, (err, result) => {
       if (err) throw err;
       console.log("Number of rows affected:", result.affectedRows);
@@ -74,7 +73,7 @@ async function runFunctions(rowID) {
   try {
     await addDB(rowID);
     console.log("Function 6");
-    const mysqlQuery = `UPDATE user_history_youtube SET status = 'subtitleSaved' WHERE user_history_youtube_id = "${rowID}"`;
+    const mysqlQuery = `UPDATE user_history_youtube SET statusSub = 'subtitleSaved' WHERE user_history_youtube_id = "${rowID}"`;
     db.query(mysqlQuery, (err, result) => {
       if (err) throw err;
       console.log("Number of rows affected:", result.affectedRows);

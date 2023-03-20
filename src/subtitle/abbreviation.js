@@ -13,7 +13,9 @@ const abbreviationText = (arrHistory) => {
     // const arrText = resKey.split(" ");
     const input = resKey;
 
-    const regex = /[a-zA-Zа-яА-Я]+/g;
+    const regex = /[а-яА-Я]+/g; //Cyrillic
+
+    // const regex = /[a-zA-Zа-яА-Я]+/g; //Cyrillic and Latin
 
     const words = input.match(regex);
 
