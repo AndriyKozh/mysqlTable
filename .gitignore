@@ -105,3 +105,21 @@ dist
 
 # TernJS port file
 .tern-port
+
+# ignore all files and directories within myfolder
+json_subtitle/*
+
+# but keep the myfolder directory itself
+!json_subtitle/
+
+# ignore all files and directories within myfolder
+subtitleVTT/*
+
+# but keep the myfolder directory itself
+!subtitleVTT/
+
+# ignore all files and directories within myfolder
+wordAndIndexInFolders/*
+
+# but keep the myfolder directory itself
+!wordAndIndexInFolders/

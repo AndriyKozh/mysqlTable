@@ -1,47 +1,37 @@
 const arrHistory = [
   {
     header: "YouTube",
-    title: "Ви дивилися відео UFC: Сезонная пресс-конференция",
-    titleUrl: "https://www.youtube.com/watch?v\u003dOJfzVAFW9eo",
+    title:
+      "Ви дивилися відео Show YouTube videos on your own website! | YouTube API Tutorial",
+    titleUrl: "https://www.youtube.com/watch?v\u003didYUy3hf3D0",
     subtitles: [
       {
-        name: "UFC Russia",
-        url: "https://www.youtube.com/channel/UCU8bQExxd38i-mnn-GLOtfA",
+        name: "Tony Zhang",
+        url: "https://www.youtube.com/channel/UCabBd1g8nBWWCx2YT4yeXOA",
       },
     ],
-    time: "2021-03-02T21:39:51.301Z",
+    time: "2023-01-26T10:01:40.260Z",
     products: ["YouTube"],
     activityControls: ["Історія переглядів YouTube"],
   },
   {
     header: "YouTube",
-    title:
-      "Ви дивилися відео Последствия UFC. Чимаев завершил карьеру, но НЕТ. Анкалаев ворвался. Пьяный Коста. Петр Ян ufc 259",
-    titleUrl: "https://www.youtube.com/watch?v\u003dPxVX0SCrins",
-    subtitles: [
+    title: "Ви дивилися відео Укр Онлайн біз",
+    titleUrl: "https://www.youtube.com/watch?v\u003dwRH-FCyD5p4",
+    description: "Переглянуто о 11:54",
+    time: "2023-01-26T09:54:47.997Z",
+    products: ["YouTube"],
+    details: [
       {
-        name: "Captain Hardcore",
-        url: "https://www.youtube.com/channel/UC6OCnksNRXOQvXi3H06nNOg",
+        name: "Від Реклами Google",
       },
     ],
-    time: "2021-03-02T21:34:29.204Z",
-    products: ["YouTube"],
-    activityControls: ["Історія переглядів YouTube"],
-  },
-  {
-    header: "YouTube",
-    title:
-      "Ви дивилися відео О чем Уайт и Кадыров умоляют Чимаева? Усман Масвидаль 2 Осенью! Коста был пьян? - Новости ММА Тайм",
-    titleUrl: "https://www.youtube.com/watch?v\u003dCk5sRhMs0js",
-    subtitles: [
-      {
-        name: "MMA Time 16+",
-        url: "https://www.youtube.com/channel/UC9W4dkEkh1U_tVX2J4W6dsg",
-      },
+    activityControls: [
+      "Історія додатків і веб-пошуку",
+      "Історія переглядів YouTube",
+      "Історія пошуку YouTube",
     ],
-    time: "2021-03-02T21:25:06.389Z",
-    products: ["YouTube"],
-    activityControls: ["Історія переглядів YouTube"],
   },
 ];
+
 module.exports = arrHistory;
