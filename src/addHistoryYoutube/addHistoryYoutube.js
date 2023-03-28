@@ -7,7 +7,7 @@ const arrHistory = require("../array/arrHistory");
 const { HOST, USER, DATABASE, PASSWORD } = process.env;
 
 const conection = mysql2.createConnection({
-  host: HOST,
+  host: "localhost",
   user: "root",
   database: DATABASE,
   password: PASSWORD,
@@ -52,7 +52,7 @@ function resultArr(arrHistory) {
 
     if (titleUrl) {
       const id = titleUrl?.slice(32, 47);
-      history.push([id, titleVideo, titleUrl, dateWathVideo, i]);
+      history.push([id, titleVideo, titleUrl, dateWathVideo]);
     } else {
       continue;
     }
@@ -62,7 +62,7 @@ function resultArr(arrHistory) {
     console.log(a);
 
     const sql =
-      "INSERT INTO user_history_youtube (user_history_youtube_id, title, titleUrl, timeDate, list) VALUE (?,?,?,?,?)"; // watch_history - table
+      "INSERT INTO youtube_statistics (user_history_youtube_id, title, titleUrl, timeDate) VALUE (?,?,?,?)"; // watch_history - table
 
     conection.execute(sql, a, function (err) {
       if (err) {

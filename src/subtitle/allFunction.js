@@ -2,7 +2,7 @@ const { db } = require("../model/dbConnection");
 
 setInterval(() => {
   const mysqlQuery =
-    "SELECT user_history_youtube_id FROM user_history_youtube WHERE subtitleAdd = 'falce' ORDER BY viewe DESC LIMIT 0, 1";
+    "SELECT user_history_youtube_id FROM user_history_youtube WHERE subtitleAdd = 'falce' ORDER BY viewes DESC LIMIT 0, 1";
 
   db.query(mysqlQuery, function (err, results) {
     if (err) {
@@ -83,4 +83,4 @@ async function runFunctions(rowID) {
   }
 }
 
-// runFunctions("4pxnGcv5DdU");
+runFunctions("OJfzVAFW9eo");

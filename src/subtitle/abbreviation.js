@@ -13,11 +13,27 @@ const abbreviationText = (arrHistory) => {
     // const arrText = resKey.split(" ");
     const input = resKey;
 
-    const regex = /[а-яА-Я]+/g; //Cyrillic
+    // const regex = /[а-яА-Я]+/g; //Cyrillic
 
-    // const regex = /[a-zA-Zа-яА-Я]+/g; //Cyrillic and Latin
+    const regex = /[a-zA-Zа-яА-Я]+/g; //Cyrillic and Latin
 
     const words = input.match(regex);
+
+    fs.writeFile(
+      `./src/subtitle/json_subtitle/${arrHistory}/wholeWords_${arrHistory}.json`,
+      JSON.stringify(words),
+      (err) => {
+        if (err) {
+          console.error("Error:", err);
+          reject(err);
+        } else {
+          console.log("The file has been saved!");
+          resolve();
+        }
+      }
+    );
+
+    console.log(words);
 
     const stemmer = natural.PorterStemmerRu;
 
@@ -39,6 +55,8 @@ const abbreviationText = (arrHistory) => {
     );
   });
 };
+
+abbreviationText("3Ovayvsgb6g");
 
 module.exports = abbreviationText;
 

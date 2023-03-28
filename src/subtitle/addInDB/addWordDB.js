@@ -28,17 +28,19 @@ const conection = mysql2.createConnection({
 function addDB(objWord) {
   return new Promise((resolve, reject) => {
     const arrId = require(`../json_subtitle/${objWord}/count_${objWord}.json`);
+    const arrIdWhole = require(`../json_subtitle/${objWord}/countWholeWords_${objWord}.json`);
 
     const arrOne = Object.entries(arrId);
+    const arrOneWhole = Object.entries(arrIdWhole);
 
-    console.log(arrOne);
+    const increaseByOne = 1;
 
     for (let i = 0; i < arrOne.length; i++) {
       const arrIndx = arrOne[i];
 
-      const sql = `INSERT INTO words (words, num_repetitions)
-  VALUES ('${arrIndx[0]}', ${arrIndx[1]})
-  ON DUPLICATE KEY UPDATE num_repetitions = num_repetitions + ${arrIndx[1]};`;
+      const sql = `INSERT INTO words (words, num_repetitions,numberOfVideos)
+    VALUES ('${arrIndx[0]}', ${arrIndx[1]}, ${increaseByOne})
+    ON DUPLICATE KEY UPDATE num_repetitions = num_repetitions + ${arrIndx[1]},numberOfVideos = numberOfVideos + ${increaseByOne};`;
 
       conection.execute(sql, arrIndx, function (err) {
         if (err) {
@@ -50,7 +52,26 @@ function addDB(objWord) {
         }
       });
     }
+    for (let i = 0; i < arrOneWhole.length; i++) {
+      const arrIndxWhole = arrOneWhole[i];
+
+      console.log(arrIndxWhole[0]);
+
+      const sqlWhole = `INSERT INTO woleWords (wordsWhole, num_Whole,numberOfVideosWhole)
+        VALUES ('${arrIndxWhole[0]}', ${arrIndxWhole[1]}, ${increaseByOne})
+        ON DUPLICATE KEY UPDATE num_Whole = num_Whole + ${arrIndxWhole[1]},numberOfVideosWhole = numberOfVideosWhole + ${increaseByOne};`;
+
+      conection.execute(sqlWhole, arrIndxWhole, function (err) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          console.log("УСПІШНО ДОБАВЛЕНО");
+          resolve();
+        }
+      });
+    }
   });
 }
-
+// addDB("3Ovayvsgb6g");
 module.exports = addDB;

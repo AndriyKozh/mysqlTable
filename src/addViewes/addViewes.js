@@ -7,7 +7,7 @@ function historyId(arrViewes) {
 
     // videoId
     const titleUrl = resInd.titleUrl;
-    const videoID = titleUrl.slice(32, 47);
+    const videoID = titleUrl?.slice(32, 47);
 
     // likeVideo
     function videoInfo(info) {
@@ -31,15 +31,17 @@ function historyId(arrViewes) {
     }
 
     fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoID}&key=`
+      `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoID}&key=AIzaSyBkUQj9uoanlVgZWB8_LPgsxrBUIoSgV-Y`
     )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        videoInfo(...data.items);
+        const a = videoInfo(...data.items);
+        console.log(a);
       });
   }
 }
+// historyId("b4mBF78oOoY"); // test Function
 
 historyId(arrViewes);
