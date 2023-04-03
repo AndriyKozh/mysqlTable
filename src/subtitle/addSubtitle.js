@@ -17,7 +17,7 @@ const addSubtitle = (arrTest) => {
     });
 
     function languageRes(resultDb) {
-      const myString = `${resultDb}`;
+      // const myString = `${resultDb}`;
       // Call the detect() function to detect the language of the string
       // const detectedLanguage = langdetect.detect(myString);
       // // Log the detected language code to the console
@@ -42,7 +42,7 @@ const addSubtitle = (arrTest) => {
       youtubedl(videoUrl, options)
         .then((output) => {
           console.log("Subtitles downloaded:", output);
-          // video subtitles processed
+          console.log(output); // video subtitles processed
           const sqlQuery =
             "UPDATE user_history_youtube SET subtitleAdd=? WHERE user_history_youtube_id=?";
           db.query(sqlQuery, [1, arrTest], (err, result) => {
@@ -50,12 +50,24 @@ const addSubtitle = (arrTest) => {
               console.log(err);
               reject(err);
             } else {
-              // console.log(result);
+              console.log(result);
               resolve(result);
             }
           });
         })
         .catch((err) => {
+          const noVideo = "noVideo";
+          const sqlQuery =
+            "UPDATE user_history_youtube SET subtitleAdd=? WHERE user_history_youtube_id=?";
+          db.query(sqlQuery, [1, arrTest], (err, result) => {
+            if (err) {
+              console.log(err);
+              reject(err);
+            } else {
+              console.log(result);
+              resolve(result);
+            }
+          });
           console.error("Error:", err);
           reject(err);
         });
@@ -64,5 +76,5 @@ const addSubtitle = (arrTest) => {
 };
 
 //test function
-// addSubtitle("OJfzVAFW9eo");
+// addSubtitle("A-6hKtEp99c");
 module.exports = addSubtitle;

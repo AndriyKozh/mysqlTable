@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/addHistoryYoutube/addHistoryYoutube.js",
+    "crud": "nodemon ./src/crudMySql.js",
+    "fetch": "nodemon ./src/newFetch/fetchAddCicle.js",
+    "history": "nodemon ./src/addHistoryYoutube/addHistoryYoutube.js",
+    "subtitle": "nodemon ./src/subtitle/allFunction.js",
+    "word": "nodemon ./src/subtitle/wordAndIndexInFolders/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

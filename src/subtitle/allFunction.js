@@ -1,5 +1,7 @@
 const { db } = require("../model/dbConnection");
 
+lastId = null;
+
 setInterval(() => {
   const mysqlQuery =
     "SELECT user_history_youtube_id FROM user_history_youtube WHERE subtitleAdd = 'falce' ORDER BY viewes DESC LIMIT 0, 1";
@@ -7,10 +9,16 @@ setInterval(() => {
   db.query(mysqlQuery, function (err, results) {
     if (err) {
       console.error(err);
+      return;
     }
-    const rowID = Object.values(results[0]);
-    console.log(rowID);
-    runFunctions(rowID);
+    if (results.length > 0) {
+      const rowID = Object.values(results[0]);
+      if (rowID !== lastId) {
+        console.log(rowID);
+        runFunctions(rowID);
+        lastId = rowID;
+      }
+    }
   });
 }, 5000);
 
@@ -29,8 +37,8 @@ async function runFunctions(rowID) {
     console.log("Function 1");
   } catch (error) {
     console.error("Error in addSubtitle:", error);
-    const mysqlQuery = `UPDATE user_history_youtube SET statusSub = 'noVideo' WHERE user_history_youtube_id = "${rowID}"`;
-    db.query(mysqlQuery, (err, result) => {
+    const mysqlQuery = `UPDATE user_history_youtube SET statusSub = ? WHERE user_history_youtube_id = "${rowID}"`;
+    return db.query(mysqlQuery, ["noVideo", rowID], (err, result) => {
       if (err) throw err;
       console.log("Number of rows affected:", result.affectedRows);
     });
@@ -72,7 +80,7 @@ async function runFunctions(rowID) {
 
   try {
     await addDB(rowID);
-    console.log("Function 6");
+    console.log("ADD DB");
     const mysqlQuery = `UPDATE user_history_youtube SET statusSub = 'subtitleSaved' WHERE user_history_youtube_id = "${rowID}"`;
     db.query(mysqlQuery, (err, result) => {
       if (err) throw err;
@@ -83,4 +91,5 @@ async function runFunctions(rowID) {
   }
 }
 
-runFunctions("OJfzVAFW9eo");
+//test function
+// runFunctions("--ff65pYvv4");

@@ -1,5 +1,6 @@
 const fs = require("fs");
 const { db } = require("../../model/dbConnection");
+lastId = null;
 
 setInterval(() => {
   const mysqlQuery =
@@ -8,25 +9,29 @@ setInterval(() => {
   db.query(mysqlQuery, function (err, results) {
     if (err) {
       console.error(err);
+      return;
     }
-    const rowID = Object.values(results[0]);
-    console.log(rowID);
-
-    const sqlQuery =
-      "UPDATE user_history_youtube SET statusWord=? WHERE user_history_youtube_id=?";
-    db.query(sqlQuery, [1, rowID], (err, result) => {
-      if (err) {
-        console.log(err);
-        // reject(err);
+    if (results.length > 0) {
+      const rowID = Object.values(results[0]);
+      if (rowID !== lastId) {
+        console.log(rowID);
+        frequency(rowID);
+        lastId = rowID;
       }
-      console.log(result);
-    });
-
-    frequency(rowID);
+    }
   });
-}, 5000);
+}, 1000);
 
 function frequency(objWords) {
+  const sqlQuery =
+    "UPDATE user_history_youtube SET statusWord=? WHERE user_history_youtube_id=?";
+  db.query(sqlQuery, [1, objWords], (err, result) => {
+    if (err) {
+      console.log(err);
+      // reject(err);
+    }
+    console.log(result);
+  });
   const objWord = require(`../json_subtitle/${objWords}/count_${objWords}.json`);
   const arrays = Object.keys(objWord);
   console.log(arrays);
