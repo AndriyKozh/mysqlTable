@@ -11,7 +11,7 @@ let lastId = null;
 
 setInterval(() => {
   const mysqlQuery =
-    "SELECT user_history_youtube_id FROM youtube_statistics WHERE lengthVideo = 'false'";
+    "SELECT user_history_youtube_id FROM user_history_youtube WHERE lengthVideo = 'false'";
 
   db.query(mysqlQuery, function (err, results) {
     if (err) {
@@ -31,8 +31,7 @@ setInterval(() => {
 
 function historyId(arrViewes) {
   fetch(
-    `${URL}?part=snippet&part=statistics&part=contentDetails&id=${arrViewes}&key=${KEY2}`
-    //       `https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&part=contentDetails&id=XOGSpXgAUxU&key=AIzaSyBkUQj9uoanlVgZWB8_LPgsxrBUIoSgV-Y`
+    `${URL}?part=snippet&part=statistics&part=contentDetails&id=${arrViewes}&key=${KEY}`
   )
     .then((response) => {
       return response.json();
@@ -100,7 +99,7 @@ function historyId(arrViewes) {
     }
     // update the database with the video information
     const sqlQuery =
-      "UPDATE youtube_statistics SET   viewes=?, oklike=?, lengthVideo=?, language=?  WHERE  user_history_youtube_id=?";
+      "UPDATE user_history_youtube SET   viewes=?, oklike=?, lengthVideo=?, language=?  WHERE  user_history_youtube_id=?";
     db.query(
       sqlQuery,
       [vieweVideo, likeVideo, durationInSeconds, langDetected, arrViewes],
@@ -117,6 +116,3 @@ function historyId(arrViewes) {
 }
 
 // // historyId(arrHistory);
-
-// Oje_ywp0TUM
-//𝗥𝗘𝗢𝗣𝗘𝗡𝗜𝗡𝗚 𝗦𝗢𝗖𝗜𝗘𝗧𝗬

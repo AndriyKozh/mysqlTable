@@ -47,7 +47,7 @@ function addDB(objWord) {
           console.log(err);
           reject(err);
         } else {
-          console.log("УСПІШНО ДОБАВЛЕНО");
+          // console.log("УСПІШНО ДОБАВЛЕНО");
           resolve();
         }
       });
@@ -55,7 +55,7 @@ function addDB(objWord) {
     for (let i = 0; i < arrOneWhole.length; i++) {
       const arrIndxWhole = arrOneWhole[i];
 
-      console.log(arrIndxWhole[0]);
+      // console.log(arrIndxWhole[0]);
 
       const sqlWhole = `INSERT INTO woleWords (wordsWhole, num_Whole,numberOfVideosWhole)
         VALUES ('${arrIndxWhole[0]}', ${arrIndxWhole[1]}, ${increaseByOne})
@@ -66,7 +66,7 @@ function addDB(objWord) {
           console.log(err);
           reject(err);
         } else {
-          console.log("УСПІШНО ДОБАВЛЕНО");
+          // console.log("УСПІШНО ДОБАВЛЕНО");
           resolve();
         }
       });

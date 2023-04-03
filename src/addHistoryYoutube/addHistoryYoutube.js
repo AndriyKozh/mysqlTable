@@ -62,7 +62,7 @@ function resultArr(arrHistory) {
     console.log(a);
 
     const sql =
-      "INSERT INTO youtube_statistics (user_history_youtube_id, title, titleUrl, timeDate) VALUE (?,?,?,?)"; // watch_history - table
+      "INSERT INTO user_history_youtube (user_history_youtube_id, title, titleUrl, timeDate) VALUE (?,?,?,?)"; // watch_history - table
 
     conection.execute(sql, a, function (err) {
       if (err) {

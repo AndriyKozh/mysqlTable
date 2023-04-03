@@ -8,16 +8,21 @@ const abbreviationText = (arrHistory) => {
     const arr = require(`./json_subtitle/${arrHistory}/${arrHistory}.json`);
     const resKey = arr.join(" ");
 
-    //filters only words from subtitles
-
-    // const arrText = resKey.split(" ");
     const input = resKey;
 
     // const regex = /[а-яА-Я]+/g; //Cyrillic
 
     const regex = /[a-zA-Zа-яА-Я]+/g; //Cyrillic and Latin
+    const words = input
+      .replace(
+        /\b(?:webvtt|captions|start|kind|position|align|ru|en|ua|language|c)\b/gi,
+        ""
+      )
+      .match(regex);
 
-    const words = input.match(regex);
+    // console.log(filteredText);
+
+    // const words = input.match(regex);
 
     fs.writeFile(
       `./src/subtitle/json_subtitle/${arrHistory}/wholeWords_${arrHistory}.json`,
@@ -32,8 +37,6 @@ const abbreviationText = (arrHistory) => {
         }
       }
     );
-
-    console.log(words);
 
     const stemmer = natural.PorterStemmerRu;
 
@@ -56,19 +59,6 @@ const abbreviationText = (arrHistory) => {
   });
 };
 
-abbreviationText("3Ovayvsgb6g");
+// abbreviationText("OJfzVAFW9eo");
 
 module.exports = abbreviationText;
-
-//////////////////////////////////////////////////////////////////////
-
-//витягує всі кириличні символи
-// const cyrillicRegex = /[\u0400-\u04FF]/g;
-// const filteredArr = resKey.replace(cyrillicRegex, "");
-// console.log(filteredArr);
-
-// залишає все крім кирилиці
-
-// const nonCyrillicRegex = /[^\u0400-\u04FF]/gi;
-// const filteredArr = resKey.replace(nonCyrillicRegex, "");
-// console.log(filteredArr);
